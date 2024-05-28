@@ -6,6 +6,7 @@ Esta aplicación ligera, desarrollada en Node.js, establece una conexión con un
 
 El proyecto está organizado de la siguiente manera:
 
+```bash
 invoice-printer-centro-drugstore/
 ├── .gitignore
 ├── package.json
@@ -21,7 +22,7 @@ invoice-printer-centro-drugstore/
 │ └── utils/
 │ └── askQuestion.ts
 └── .env
-
+```
 ### .gitignore
 
 - `node_modules`: Directorio de dependencias de Node.js.
