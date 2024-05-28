@@ -1,5 +1,3 @@
-Aquí tienes un README.md bien estructurado para tu proyecto de GitHub:
-
 # Invoice Printer Centro Drugstore
 
 Esta aplicación ligera, desarrollada en Node.js, establece una conexión con un servidor web a través de WebSockets. Su propósito principal es recibir señales que desencadenan la impresión de facturas de manera eficiente y rápida.
