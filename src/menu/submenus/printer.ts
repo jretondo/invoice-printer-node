@@ -15,7 +15,10 @@ async function listPrinters() {
 
 async function printPDF(printerName: string, filePath: string) {
     try {
-        await print(filePath, { printer: printerName });
+        const printOptions = {           
+            silent: true
+        };
+        await print(filePath, { printer: printerName, ...printOptions });
         console.log('Documento enviado a la impresora con éxito');
     } catch (error) {
         console.error('Error al imprimir el documento:', error);
@@ -23,19 +26,29 @@ async function printPDF(printerName: string, filePath: string) {
 }
 
 const selectPrinter = async () => {
-    const printer = await listPrinters();
-    const printerName = printer.name;
-    const printerFolder = path.join('printer');
-    const printerFile = path.join(printerFolder, 'printer.txt');
-    if (!fs.existsSync(printerFolder)) {
-        fs.mkdirSync(printerFolder);
-    }
-    fs.writeFileSync(printerFile, printerName);
-    console.log('Impresora guardada')
-    connectToSocketAPI();
+    const enabledPrinter = fs.existsSync(path.join('printer', 'printer.txt'));
+
+    if (enabledPrinter) {
+    const printerName = fs.readFileSync(path.join('printer', 'printer.txt'), 'utf8').trim();
+        connectToSocketAPI();
     console.log('Impresora: ', printerName);
     console.log('Para salir presiona Ctrl + C')
     console.log('En espera de tickets para imprimir...');
+    } else {
+        const printer = await listPrinters();
+        const printerName = printer.name;
+        const printerFolder = path.join('printer');
+        const printerFile = path.join(printerFolder, 'printer.txt');
+        if (!fs.existsSync(printerFolder)) {
+            fs.mkdirSync(printerFolder);
+        }
+        fs.writeFileSync(printerFile, printerName);
+        console.log('Impresora guardada')
+        connectToSocketAPI();
+        console.log('Impresora: ', printerName);
+        console.log('Para salir presiona Ctrl + C')
+        console.log('En espera de tickets para imprimir...');
+    }  
 }
 
 export {
